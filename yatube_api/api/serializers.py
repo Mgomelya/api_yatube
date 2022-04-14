@@ -45,5 +45,3 @@ class CommentSerializer(serializers.ModelSerializer):
         post_id = view.kwargs['post_id'] if view else None
         validated_data['post'] = get_object_or_404(Post, pk=post_id)
         return super().create(validated_data)
-
-
