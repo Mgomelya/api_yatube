@@ -1,20 +1,10 @@
-from django.contrib.auth import get_user_model
 from rest_framework import serializers
 from django.shortcuts import get_object_or_404
 from posts.models import Post, Group, Comment
 
-User = get_user_model()
-
-
-class UserSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = User
-        fields = ('id', 'username', 'first_name',
-                  'last_name',)
-
 
 class PostSerializer(serializers.ModelSerializer):
-    author = serializers.CharField(source='author.username', read_only=True)
+    author = serializers.StringRelatedField(read_only=True)
 
     class Meta:
         model = Post
@@ -32,8 +22,8 @@ class GroupSerializer(serializers.ModelSerializer):
 
 
 class CommentSerializer(serializers.ModelSerializer):
-    author = serializers.CharField(source='author.username', read_only=True)
-    post = serializers.IntegerField(source='post.id', read_only=True)
+    author = serializers.StringRelatedField(read_only=True)
+    post = serializers.PrimaryKeyRelatedField(read_only=True)
 
     class Meta:
         model = Comment

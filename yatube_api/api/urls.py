@@ -7,14 +7,15 @@ from .views import PostViewSet, GroupViewSet, CommentListCreateAPIView, \
 
 app_name = 'api'
 
-router = DefaultRouter()
-router.register('posts', PostViewSet)
-router.register('groups', GroupViewSet)
+v1_router = DefaultRouter()
+v1_router.register('posts', PostViewSet)
+v1_router.register('groups', GroupViewSet)
 
 urlpatterns = [
-    path('', include(router.urls)),
-    path('api-token-auth/', views.obtain_auth_token),
-    path('posts/<int:post_id>/comments/', CommentListCreateAPIView.as_view()),
-    path('posts/<int:post_id>/comments/<int:pk>/',
+    path('v1/', include(v1_router.urls)),
+    path('v1/api-token-auth/', views.obtain_auth_token),
+    path('v1/posts/<int:post_id>/comments/',
+         CommentListCreateAPIView.as_view()),
+    path('v1/posts/<int:post_id>/comments/<int:pk>/',
          CommentRUDAPIView.as_view()),
 ]
